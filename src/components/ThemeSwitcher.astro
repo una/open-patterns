@@ -1,0 +1,72 @@
+---
+// src/components/ThemeSwitcher.astro
+const themes = ["Light", "Dark", "Retro"];
+---
+<div class="theme-switcher">
+  <h3>Theme</h3>
+  <div class="theme-buttons">
+    {themes.map(theme => (
+      <button data-theme-name={theme.toLowerCase()}>{theme}</button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .theme-switcher h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+  .theme-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  .theme-buttons button {
+    padding: 5px 10px;
+    border: 1px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .theme-buttons button:hover {
+    background: var(--primary-color);
+    color: var(--bg-color);
+  }
+</style>
+
+<script>
+  function applyTheme(theme) {
+    // Remove existing theme stylesheet if it exists
+    const existingLink = document.head.querySelector('#theme-style');
+    if (existingLink) {
+      existingLink.remove();
+    }
+
+    // Create and append new theme stylesheet
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.id = 'theme-style';
+    link.href = `/themes/${theme}.css`;
+    document.head.appendChild(link);
+
+    // Save preference
+    localStorage.setItem('theme', theme);
+  }
+
+  // Add click listeners to buttons
+  document.querySelectorAll('.theme-buttons button').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const themeName = (e.target as HTMLElement).dataset.themeName;
+      if (themeName) {
+        applyTheme(themeName);
+      }
+    });
+  });
+
+  // Apply saved theme on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    applyTheme(savedTheme);
+  });
+</script>

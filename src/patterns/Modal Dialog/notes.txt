@@ -1,0 +1,1 @@
+This modal uses the native HTML <dialog> element, which provides built-in accessibility features and state management via JavaScript methods like showModal() and close().

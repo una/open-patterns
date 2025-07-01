@@ -1,0 +1,44 @@
+---
+// src/components/CopyButton.astro
+---
+<button class="copy-btn">Copy</button>
+
+<style>
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    background-color: #888;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  div:hover > .copy-btn {
+    opacity: 1;
+  }
+  .copy-btn:hover {
+    background-color: #666;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const pre = button.parentElement;
+      const code = pre.querySelector('code');
+      if (navigator.clipboard && code) {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      }
+    });
+  });
+</script>

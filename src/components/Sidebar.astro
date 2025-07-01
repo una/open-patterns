@@ -1,0 +1,54 @@
+---
+// src/components/Sidebar.astro
+
+// highlight-start
+import fs from 'node:fs/promises';
+import path from 'node:path';
+// highlight-end
+import ThemeSwitcher from './ThemeSwitcher.astro';
+
+// highlight-start
+// Get the absolute path to the patterns directory
+const patternsPath = path.resolve(process.cwd(), 'src/patterns');
+
+// Read all entries in the directory, filter for sub-directories, and get their names
+const patternNames = (await fs.readdir(patternsPath, { withFileTypes: true }))
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name);
+
+const patterns = patternNames.map(name => {
+  const id = name.toLowerCase().replace(/\s+/g, '-');
+  return { name, id };
+});
+// highlight-end
+---
+<aside class="sidebar">
+  <h1>Open Patterns</h1>
+  <ThemeSwitcher />
+  <nav>
+    <h2>Patterns</h2>
+    <ul>
+      {patterns.map(pattern => (
+        <li>
+          <a href={`#${pattern.id}`}>{pattern.name}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  h1 {
+    margin-top: 0;
+  }
+  nav {
+    margin-top: 2rem;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  nav li {
+    margin-bottom: 0.75rem;
+  }
+</style>

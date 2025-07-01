@@ -1,0 +1,26 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Open Patterns Showcase" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+    <script type="module" src="https://unpkg.com/@web-platform-dx/baseline-status/dist/baseline-status.js"></script>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

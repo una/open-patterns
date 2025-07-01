@@ -1,16 +1,31 @@
 ---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Pattern from '../components/Pattern.astro';
 
+// highlight-start
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+// Get the absolute path to the patterns directory
+const patternsPath = path.resolve(process.cwd(), 'src/patterns');
+
+// Read all entries in the directory, filter for sub-directories, and get their names.
+// This is the same logic used in Sidebar.astro to ensure consistency.
+const patternNames = (await fs.readdir(patternsPath, { withFileTypes: true }))
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name);
+// highlight-end
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Open Patterns">
+  <main class="app-container">
+    <Sidebar />
+    <div class="main-content">
+      {patternNames.map(name => (
+        <Pattern patternName={name} />
+      ))}
+    </div>
+  </main>
+</Layout>

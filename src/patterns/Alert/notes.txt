@@ -1,0 +1,1 @@
+Simple static alerts for conveying information to the user. These can be extended with JavaScript to be dismissible.

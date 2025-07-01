@@ -1,0 +1,115 @@
+---
+// src/components/Pattern.astro
+
+// highlight-start
+import fs from 'node:fs/promises';
+import path from 'node:path';
+// highlight-end
+import CopyButton from './CopyButton.astro';
+
+interface Props {
+  patternName: string;
+}
+
+const { patternName } = Astro.props;
+const id = patternName.toLowerCase().replace(/\s+/g, '-');
+
+// highlight-start
+// Construct an absolute path to the specific pattern's directory
+const patternPath = path.resolve(process.cwd(), 'src/patterns', patternName);
+
+// Use fs.readFile to dynamically read the content of each file.
+// This is the correct method for dynamic paths based on props.
+const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
+  fs.readFile(path.join(patternPath, 'markup.html'), 'utf-8'),
+  fs.readFile(path.join(patternPath, 'styles.css'), 'utf-8'),
+  fs.readFile(path.join(patternPath, 'script.js'), 'utf-8'),
+  fs.readFile(path.join(patternPath, 'notes.txt'), 'utf-8'),
+  fs.readFile(path.join(patternPath, 'baseline.txt'), 'utf-8'),
+]);
+// highlight-end
+
+// Create the srcdoc for the iframe preview
+const iframeSrcDoc = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <style>${cssCode}</style>
+    </head>
+    <body>
+      ${htmlCode}
+      <script>${jsCode}<\/script>
+    </body>
+  </html>
+`;
+---
+<section class="pattern-showcase" id={id}>
+  <h2>{patternName}</h2>
+
+  <h3>Preview</h3>
+  <div class="preview-box">
+    <iframe srcdoc={iframeSrcDoc} title={`${patternName} Preview`} loading="lazy"></iframe>
+  </div>
+
+  <h3>Code</h3>
+  <div class="code-tabs">
+    <h4>HTML</h4>
+    <div class="code-block">
+      <pre><code>{htmlCode}</code></pre>
+      <CopyButton />
+    </div>
+
+    <h4>CSS</h4>
+    <div class="code-block">
+      <pre><code>{cssCode}</code></pre>
+      <CopyButton />
+    </div>
+
+    <h4>JavaScript</h4>
+    <div class="code-block">
+      <pre><code>{jsCode}</code></pre>
+      <CopyButton />
+    </div>
+  </div>
+
+  <h3>Browser Support</h3>
+  <div class="baseline-widget">
+    {/* Use .trim() to remove any potential whitespace from the file */}
+    <baseline-status key={baselineKey.trim()} display="wide"></baseline-status>
+  </div>
+
+  <h3>Notes</h3>
+  <p class="notes">{notesText}</p>
+</section>
+
+<style>
+  .pattern-showcase {
+    border-top: 2px solid var(--border-color);
+    padding-top: 2rem;
+    margin-bottom: 4rem;
+  }
+  .preview-box {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .preview-box iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    display: block;
+    background-color: #fff;
+  }
+  .code-block {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .notes {
+    white-space: pre-wrap;
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    line-height: 1.6;
+  }
+</style>

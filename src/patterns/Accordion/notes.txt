@@ -1,0 +1,1 @@
+This accordion uses the native HTML <details> and <summary> elements. It is accessible by default and requires no JavaScript to function.
