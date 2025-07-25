@@ -38,6 +38,7 @@ body {
   padding: 2rem 3rem;
   overflow-y: auto;
   scroll-behavior: smooth;
+  background: var(--bg-color);
 }
 
 h1, h2, h3 {

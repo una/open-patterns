@@ -1,6 +1,7 @@
 /* public/themes/retro.css */
 :root {
   --bg-color: #fdf6e3;
+  --layer-bg: #ffffff;
   --text-color: #657b83;
   --primary-color: #268bd2;
   --border-color: #eee8d5;

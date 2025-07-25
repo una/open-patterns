@@ -1,6 +1,7 @@
 /* public/themes/light.css */
 :root {
   --bg-color: #ffffff;
+  --layer-bg: #fff;
   --text-color: #222222;
   --primary-color: #007bff;
   --border-color: #e1e1e1;

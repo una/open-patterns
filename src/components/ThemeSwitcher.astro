@@ -36,20 +36,11 @@ const themes = ["Light", "Dark", "Retro"];
 </style>
 
 <script>
-  function applyTheme(theme) {
-    // Remove existing theme stylesheet if it exists
-    const existingLink = document.head.querySelector('#theme-style');
-    if (existingLink) {
-      existingLink.remove();
+  function applyTheme(theme: string) {
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.setAttribute('data-theme', theme);
     }
-
-    // Create and append new theme stylesheet
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.id = 'theme-style';
-    link.href = `/themes/${theme}.css`;
-    document.head.appendChild(link);
-
     // Save preference
     localStorage.setItem('theme', theme);
   }
@@ -70,3 +61,35 @@ const themes = ["Light", "Dark", "Retro"];
     applyTheme(savedTheme);
   });
 </script>
+<style is:global>
+  [data-theme="light"] {
+    --primary-color: #333;
+    --bg-color: #fff;
+    --layer-bg: #fff;
+    --accent-color: #007bff;
+    --text-color: #333;
+    --link-color: #007bff;
+    --border-color: #ddd;
+    --hover-bg-color: #f0f0f0;
+  }
+  [data-theme="dark"] {
+    --primary-color: #eee;
+    --bg-color: #333;
+    --layer-bg: #373639;
+    --accent-color: #64ffda;
+    --text-color: #eee;å
+    --link-color: #64ffda;
+    --border-color: #555;
+    --hover-bg-color: #444;
+  }
+  [data-theme="retro"] {
+    --primary-color: #7c5a43;
+    --bg-color: #efebe3;
+    --layer-bg: #f6f4eb;
+    --accent-color: #d96f39;
+    --text-color: #7c5a43;
+    --link-color: #d96f39;
+    --border-color: #c9c4b9;
+    --hover-bg-color: #e0dace;
+  }
+</style>
