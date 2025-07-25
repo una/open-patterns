@@ -53,23 +53,25 @@ const iframeSrcDoc = `
 
   <h3>Code</h3>
   <div class="code-tabs">
-    <h4>HTML</h4>
-    <div class="code-block">
+    <div class="tab-buttons">
+      <button class="tab-button active" data-tab="html">HTML</button>
+      <button class="tab-button" data-tab="css">CSS</button>
+      {jsCode && <button class="tab-button" data-tab="js">JavaScript</button>}
+    </div>
+    <div id="html" class="code-block tab-pane active">
       <pre><code>{htmlCode}</code></pre>
       <CopyButton />
     </div>
-
-    <h4>CSS</h4>
-    <div class="code-block">
+    <div id="css" class="code-block tab-pane">
       <pre><code>{cssCode}</code></pre>
       <CopyButton />
     </div>
-
-    <h4>JavaScript</h4>
-    <div class="code-block">
-      <pre><code>{jsCode}</code></pre>
-      <CopyButton />
-    </div>
+    {jsCode &&
+      <div id="js" class="code-block tab-pane">
+        <pre><code>{jsCode}</code></pre>
+        <CopyButton />
+      </div>
+    }
   </div>
 
   <h3>Browser Support</h3>
@@ -81,6 +83,34 @@ const iframeSrcDoc = `
   <h3>Notes</h3>
   <p class="notes">{notesText}</p>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabContainers = document.querySelectorAll('.code-tabs');
+
+    tabContainers.forEach(container => {
+      const tabButtons = container.querySelectorAll('.tab-button');
+      const tabPanes = container.querySelectorAll('.tab-pane');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tab = (button as HTMLElement).dataset.tab;
+
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          tabPanes.forEach(pane => {
+            if ((pane as HTMLElement).id === tab) {
+              pane.classList.add('active');
+            } else {
+              pane.classList.remove('active');
+            }
+          });
+        });
+      });
+    });
+  });
+</script>
 
 <style>
   .pattern-showcase {
@@ -104,6 +134,28 @@ const iframeSrcDoc = `
   .code-block {
     position: relative;
     margin-bottom: 1rem;
+  }
+  .tab-buttons {
+    margin-bottom: -1rem;
+  }
+  .tab-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    margin-right: 0.25rem;
+  }
+  .tab-button.active {
+    background: var(--code-bg);
+    border-bottom: 1px solid var(--code-bg);
+  }
+  .tab-pane {
+    display: none;
+  }
+  .tab-pane.active {
+    display: block;
   }
   .notes {
     white-space: pre-wrap;

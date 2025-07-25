@@ -57,7 +57,8 @@ pre {
   background-color: var(--code-bg);
   color: var(--code-text);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 8px;
+  border: 1px solid var(--border-color);
   overflow-x: auto;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.9em;

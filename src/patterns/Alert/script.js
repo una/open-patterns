@@ -1,1 +1,0 @@
-// No script needed for static alerts.
