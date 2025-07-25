@@ -18,7 +18,7 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-    <script type="module" src="https://unpkg.com/@web-platform-dx/baseline-status/dist/baseline-status.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/baseline-status@1/baseline-status.min.js" type="module"></script>
 	</head>
 	<body>
 		<slot />

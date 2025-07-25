@@ -27,6 +27,7 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
   fs.readFile(path.join(patternPath, 'notes.txt'), 'utf-8'),
   fs.readFile(path.join(patternPath, 'baseline.txt'), 'utf-8'),
 ]);
+
 // highlight-end
 
 ---
@@ -104,6 +105,7 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
     border-top: 2px solid var(--border-color);
     padding-top: 2rem;
     margin-bottom: 4rem;
+    max-width: 1000px;
   }
   .preview-box {
     border: 1px solid var(--border-color);
