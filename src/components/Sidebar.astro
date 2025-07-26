@@ -24,15 +24,24 @@ const patterns = patternNames.map(name => {
 ---
 <aside class="sidebar">
   <h1>Open Patterns</h1>
+  <p>High-quality, themeable, accessible, vetted, open-source UI components from <a href="https://open-ui.org/">OpenUI</a>. <a href="/about">Read more</a>.
   <ThemeSwitcher />
   <nav>
-    <h2>Patterns</h2>
     <ul>
       {patterns.map(pattern => (
         <li>
-          <a href={`#${pattern.id}`}>{pattern.name}</a>
+          <a href={`/#${pattern.id}`}>{pattern.name}</a>
         </li>
       ))}
+    </ul>
+  </nav>
+  
+  <nav>
+    <ul>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contributing">Contribute</a></li>
+      <li><a href="https://github.com/openui/design-system/" target="_blank">GitHub</a></li>
+      <li><a href="https://discord.com/invite/DEWjhSw" target="_blank">Discord</a></li>
     </ul>
   </nav>
 </aside>
