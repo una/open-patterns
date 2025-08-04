@@ -1,6 +1,7 @@
 ---
 // src/components/CopyButton.astro
 ---
+
 <button class="copy-btn">Copy</button>
 
 <style>
@@ -10,32 +11,37 @@
     right: 10px;
     padding: 4px 8px;
     font-size: 0.8em;
-    background-color: #888;
+    background-color: #666;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-  div:hover > .copy-btn {
-    opacity: 1;
+    opacity: 0.5;
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease;
   }
   .copy-btn:hover {
-    background-color: #666;
+    opacity: 1;
+  }
+  .copy-btn.copied {
+    background-color: #28a745;
+    opacity: 1;
   }
 </style>
 
 <script>
-  document.querySelectorAll('.copy-btn').forEach(button => {
-    button.addEventListener('click', () => {
+  document.querySelectorAll(".copy-btn").forEach((button) => {
+    button.addEventListener("click", () => {
       const pre = button.parentElement;
-      const code = pre.querySelector('code');
+      const code = pre.querySelector("code");
       if (navigator.clipboard && code) {
         navigator.clipboard.writeText(code.innerText).then(() => {
-          button.innerText = 'Copied!';
+          button.innerText = "Copied!";
+          button.classList.add("copied");
           setTimeout(() => {
-            button.innerText = 'Copy';
+            button.innerText = "Copy";
+            button.classList.remove("copied");
           }, 2000);
         });
       }
