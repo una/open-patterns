@@ -62,11 +62,14 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
     }
   </div>
 
-  <h3>Browser Support</h3>
-  <div class="baseline-widget">
-    {/* Use .trim() to remove any potential whitespace from the file */}
-    <baseline-status key={baselineKey.trim()} display="wide"></baseline-status>
-  </div>
+  { baselineKey && (
+    <h3>Browser Support</h3>
+    <div class="baseline-widget">
+      {/* Use .trim() to remove any potential whitespace from the file */}
+      <baseline-status featureId={baselineKey.trim()} display="wide"
+      ></baseline-status>
+    </div>
+  )}
 
   <h3>Notes</h3>
   <p class="notes">{notesText}</p>
