@@ -1,10 +1,10 @@
 ---
 // src/components/Pattern.astro
 
-// highlight-start
 import fs from 'node:fs/promises';
 import path from 'node:path';
-// highlight-end
+import { Code } from 'astro:components';
+
 import CopyButton from './CopyButton.astro';
 
 interface Props {
@@ -14,7 +14,6 @@ interface Props {
 const { patternName } = Astro.props;
 const id = patternName.toLowerCase().replace(/\s+/g, '-');
 
-// highlight-start
 // Construct an absolute path to the specific pattern's directory
 const patternPath = path.resolve(process.cwd(), 'src/patterns', patternName);
 
@@ -27,10 +26,8 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
   fs.readFile(path.join(patternPath, 'notes.txt'), 'utf-8'),
   fs.readFile(path.join(patternPath, 'baseline.txt'), 'utf-8'),
 ]);
-
-// highlight-end
-
 ---
+
 <section class="pattern-showcase" id={id}>
   <h2>{patternName}</h2>
 
@@ -47,16 +44,16 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
       {jsCode && <button class="tab-button" data-tab="js">JavaScript</button>}
     </div>
     <div id="html" class="code-block tab-pane active">
-      <pre><code>{htmlCode}</code></pre>
+      <Code lang="html" code={htmlCode} />
       <CopyButton />
     </div>
     <div id="css" class="code-block tab-pane">
-      <pre><code>{cssCode}</code></pre>
+      <Code lang="css" code={cssCode} />
       <CopyButton />
     </div>
     {jsCode &&
       <div id="js" class="code-block tab-pane">
-        <pre><code>{jsCode}</code></pre>
+        <Code lang="js" code={jsCode} />
         <CopyButton />
       </div>
     }
