@@ -1,0 +1,32 @@
+ /* Default theme */
+ :root,
+ [data-theme="light"] {    
+    --primary-color: #007bff;
+    --bg-color: #ffffff;
+    --layer-bg: #f8f9fa;
+    --accent-color: #007bff;
+    --text-color: #222222;
+    --link-color: #007bff;
+    --border-color: #e1e1e1;
+    --hover-bg-color: #f0f0f0;
+  }
+  [data-theme="dark"] {
+    --primary-color: #eee;
+    --bg-color: #333;
+    --layer-bg: #373639;
+    --accent-color: #64ffda;
+    --text-color: #eee;
+    --link-color: #64ffda;
+    --border-color: #555;
+    --hover-bg-color: #444;
+  }
+  [data-theme="retro"] {
+    --primary-color: #7c5a43;
+    --bg-color: #efebe3;
+    --layer-bg: #f6f4eb;
+    --accent-color: #d96f39;
+    --text-color: #7c5a43;
+    --link-color: #d96f39;
+    --border-color: #c9c4b9;
+    --hover-bg-color: #e0dace;
+  }

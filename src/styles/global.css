@@ -1,14 +1,4 @@
 /* src/styles/global.css */
-:root {
-  /* Default to light theme */
-  --bg-color: #ffffff;
-  --text-color: #222222;
-  --primary-color: #007bff;
-  --border-color: #e1e1e1;
-  --sidebar-bg: #f8f9fa;
-  --code-bg: #f1f1f1;
-  --code-text: #333;
-}
 
 body {
   margin: 0;
@@ -26,7 +16,7 @@ body {
 .sidebar {
   width: 280px;
   flex-shrink: 0;
-  background-color: var(--sidebar-bg);
+  background-color: var(--layer-bg);
   border-right: 1px solid var(--border-color);
   padding: 1.5rem;
   overflow-y: auto;
