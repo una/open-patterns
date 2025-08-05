@@ -2,6 +2,7 @@
 // src/components/ThemeSwitcher.astro
 const themes = ["Light", "Dark", "Retro"];
 ---
+
 <div class="theme-switcher">
   <h3>Theme</h3>
   <div class="theme-buttons">
@@ -37,9 +38,9 @@ const themes = ["Light", "Dark", "Retro"];
 
 <script>
   function applyTheme(theme: string) {
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-      mainContent.setAttribute('data-theme', theme);
+    const bodyElement = document.body;
+    if (bodyElement) {
+      bodyElement.setAttribute('data-theme', theme);
     }
     // Save preference
     localStorage.setItem('theme', theme);
@@ -61,35 +62,3 @@ const themes = ["Light", "Dark", "Retro"];
     applyTheme(savedTheme);
   });
 </script>
-<style is:global>
-  [data-theme="light"] {
-    --primary-color: #333;
-    --bg-color: #fff;
-    --layer-bg: #fff;
-    --accent-color: #007bff;
-    --text-color: #333;
-    --link-color: #007bff;
-    --border-color: #ddd;
-    --hover-bg-color: #f0f0f0;
-  }
-  [data-theme="dark"] {
-    --primary-color: #eee;
-    --bg-color: #333;
-    --layer-bg: #373639;
-    --accent-color: #64ffda;
-    --text-color: #eee;å
-    --link-color: #64ffda;
-    --border-color: #555;
-    --hover-bg-color: #444;
-  }
-  [data-theme="retro"] {
-    --primary-color: #7c5a43;
-    --bg-color: #efebe3;
-    --layer-bg: #f6f4eb;
-    --accent-color: #d96f39;
-    --text-color: #7c5a43;
-    --link-color: #d96f39;
-    --border-color: #c9c4b9;
-    --hover-bg-color: #e0dace;
-  }
-</style>
