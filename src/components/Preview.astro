@@ -1,0 +1,28 @@
+---
+const { html, css, js } = Astro.props;
+
+/* Scoping component styles so they don't leak to the docs */
+const scopedCSS = css ? `@scope { ${css} }` : null;
+---
+
+<div class="preview-box">
+  {css && <style set:html={scopedCSS} />}
+  {html && <Fragment set:html={html} />}
+  {js && <script is:inline set:html={js}></script>}
+</div>
+
+<style>
+  .preview-box {
+    /* Disable inheritance from docs styles */
+    all: initial;
+
+    /* Preview box styles overriding all: initial */
+    display: block;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+  }
+</style>

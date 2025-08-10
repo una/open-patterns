@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 // highlight-end
 import CopyButton from './CopyButton.astro';
+import Preview from './Preview.astro';
 
 interface Props {
   patternName: string;
@@ -35,9 +36,7 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
   <h2>{patternName}</h2>
 
   <h3>Preview</h3>
-  <div class="preview-box" set:html={htmlCode}></div>
-  <style set:html={cssCode}></style>
-  <script set:html={jsCode}></script>
+  <Preview html={htmlCode} css={cssCode} js={jsCode} />
 
   <h3>Code</h3>
   <div class="code-tabs">
@@ -110,16 +109,7 @@ const [htmlCode, cssCode, jsCode, notesText, baselineKey] = await Promise.all([
     margin-bottom: 4rem;
     max-width: 1000px;
   }
-  .preview-box {
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-  }
-  .preview-box {
-    background-color: var(--bg-color);
-    padding: 1.5rem;
-  }
+  
   .code-block {
     position: relative;
     margin-bottom: 1rem;
