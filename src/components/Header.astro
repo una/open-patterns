@@ -1,0 +1,117 @@
+---
+import ThemeSwitcher from './ThemeSwitcher.astro';
+import MenuButton from './MenuButton.astro';
+import CloseButton from './CloseButton.astro';
+
+type Pattern = {
+  name: string;
+  id: string;
+};
+
+const { patterns }: Record<string, Pattern[]> = Astro.props;
+---
+
+<header class="header">
+  <h1>Open Patterns</h1>
+
+  <MenuButton popovertarget="popover-nav">Menu</MenuButton>
+  
+  <!-- Mobile nav duplicated for semantic popover -->
+  <nav class="popover-nav" popover id="popover-nav">
+    <h2>Patterns</h2>
+    <ul>
+      {patterns.map(pattern => (
+        <li>
+          <a href={`#${pattern.id}`}>{pattern.name}</a>
+        </li>
+      ))}
+    </ul>
+    <CloseButton popovertarget="popover-nav">Close</CloseButton>
+    <ThemeSwitcher />
+  </nav>
+</header>
+
+<script>
+  const mobileLinks = document.querySelectorAll<HTMLElement>('.popover-nav > ul > li > a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      // Close the popover when a link is clicked
+      link.closest<HTMLElement>('.popover-nav')?.hidePopover();
+    });
+  });
+</script>
+
+<style is:global>
+  html {
+    scroll-padding-block-start: calc((1rem + 60px));
+  }
+
+  .header {
+    background-color: var(--sidebar-bg);
+    
+    @media (min-width: 769px) {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-block: 0.75rem;
+      padding-inline: 3rem;
+      border-block-end: 1px solid var(--border-color);
+      z-index: 1;
+    }
+
+    > h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+  }
+  
+  .popover-nav {
+    > ul {
+      list-style: none;
+      padding: 0;
+  
+      > li {
+        margin-bottom: 0.75rem;
+      }
+    }
+  }
+
+  .popover-nav {
+    inset: 2rem;
+    overflow-y: auto;
+    margin: auto;
+    width: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    background-color: var(--sidebar-bg);
+    max-height: calc(100dvh - 4rem);
+
+    &::backdrop {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  .menu-button {
+    flex-shrink: 0;
+    @media (min-width: 769px) {
+      display: none;
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    left: auto;
+    right: 1rem;
+    top: 1rem;
+  }
+</style>

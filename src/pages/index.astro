@@ -4,9 +4,9 @@ import Layout from '../layouts/Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Pattern from '../components/Pattern.astro';
 
-// highlight-start
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import Header from '../components/Header.astro';
 
 // Get the absolute path to the patterns directory
 const patternsPath = path.resolve(process.cwd(), 'src/patterns');
@@ -16,12 +16,17 @@ const patternsPath = path.resolve(process.cwd(), 'src/patterns');
 const patternNames = (await fs.readdir(patternsPath, { withFileTypes: true }))
   .filter(dirent => dirent.isDirectory())
   .map(dirent => dirent.name);
-// highlight-end
+
+const patterns = patternNames.map(name => {
+  const id = name.toLowerCase().replace(/\s+/g, '-');
+  return { name, id };
+});
 ---
 
 <Layout title="Open Patterns">
+  <Header patterns={patterns} />
   <main class="app-container">
-    <Sidebar />
+    <Sidebar patterns={patterns} />
     <div class="main-content">
       {patternNames.map(name => (
         <Pattern patternName={name} />

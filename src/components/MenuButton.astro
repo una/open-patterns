@@ -1,0 +1,40 @@
+---
+import CloseIcon from "./icons/CloseIcon.astro";
+import MenuIcon from "./icons/MenuIcon.astro";
+
+const { popovertarget } = Astro.props;
+---
+
+<button class="menu-button" popovertarget={popovertarget} popovertargetaction="toggle">
+  <span class="sr-only"><slot /></span>
+  <MenuIcon class="burger" />
+  <CloseIcon class="close" />
+</button>
+
+<script>
+  const menuButton = document.querySelector('.menu-button');
+  const popover = document.getElementById(menuButton!.getAttribute('popovertarget')!);
+  popover?.addEventListener('toggle', (event: ToggleEvent) => {
+    menuButton?.classList.toggle('active', event.newState === 'open');
+  });
+</script>
+
+<style is:global>
+  .menu-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 2.5em;
+    height: 2.5em;
+    padding: 0.5em;
+  }
+
+  .menu-button:not(.active) .close {
+    display: none;
+  }
+
+  .menu-button.active .burger {
+    display: none;
+  }
+</style>
