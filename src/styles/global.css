@@ -16,21 +16,16 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100dvh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .app-container {
   display: flex;
   height: 100vh;
-}
-
-.sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  background-color: var(--sidebar-bg);
-  border-right: 1px solid var(--border-color);
-  padding: 1.5rem;
-  overflow-y: auto;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .main-content {
@@ -67,4 +62,15 @@ pre {
 
 code {
   font-family: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
